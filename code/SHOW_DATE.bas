@@ -1,26 +1,36 @@
-* Quick program to show the ICONV of a Date
-dat = field(sentence()," ",2)
+* Quick program to show the Iconv of a Date
+dat = Field(Sentence()," ",2)
 Crt
 If dat = "" Then
    Crt "Enter Date: ":
-   input dat
+   Input dat
    Crt
 End
 If dat = "" Then Stop
-If len(dat) = 5 Then
+If Len(dat) = 5 Then
    idat = dat
-   odat = oconv(idat,"D4/")
+   odat = Oconv(idat,"D4/")
    Crt "External: ":odat
 End Else
    odat = dat
-   idat = iconv(odat,"D")
+   idat = Iconv(odat,"D")
    Crt "Internal: ":idat
 End
-Crt "Month (word): ":oconv(idat,"DMA")
-Crt "Month (number): ":oconv(idat,"DM")
-Crt "Day: ":oconv(idat,"DD")
-Crt "Day of Week (word): ":oconv(idat,"DWA")
-Crt "Day of Week (number): ":oconv(idat,"DW")
-Crt "Quarter: ":oconv(idat,"DQ")
-Crt "Year: ":oconv(idat,"DY")
+*
+internalDate = Date()
+externalDate = Oconv(internalDate,"D4/")
+internalTime = Time()
+externalTime = Oconv(internalTime,"MTHS")
+*
+Crt "Month (word): ":Oconv(idat,"DMA")
+Crt "Month (number): ":Oconv(idat,"DM")
+Crt "Day: ":Oconv(idat,"DD")
+Crt "Day of Week (word): ":Oconv(idat,"DWA")
+Crt "Day of Week (number): ":Oconv(idat,"DW")
+Crt "Quarter: ":Oconv(idat,"DQ")
+Crt "Year: ":Oconv(idat,"DY")
+Crt "Current Internal Date: ":internalDate
+Crt "Current External Date: ":externalDate
+Crt "Current Internal Time: ":internalTime
+Crt "Current External Time: ":externalTime
 End
