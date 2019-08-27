@@ -20,7 +20,8 @@ End
 internalDate = Date()
 externalDate = Oconv(internalDate,"D4/")
 internalTime = Time()
-externalTime = Oconv(internalTime,"MTHS")
+external24Time = Oconv(internalTime,"MTS")
+external12Time = Oconv(internalTime,"MTHS")
 *
 Crt "Month (word): ":Oconv(idat,"DMA")
 Crt "Month (number): ":Oconv(idat,"DM")
@@ -32,5 +33,6 @@ Crt "Year: ":Oconv(idat,"DY")
 Crt "Current Internal Date: ":internalDate
 Crt "Current External Date: ":externalDate
 Crt "Current Internal Time: ":internalTime
-Crt "Current External Time: ":externalTime
+Crt "Current External 24h Time: ":external24Time
+Crt "Current External 12h Time: ":external12Time
 End
