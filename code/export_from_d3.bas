@@ -12,6 +12,10 @@ equ asterisk$ to "*"
 equ tabChar$ to CHAR(9)
 equ crChar$ to CHAR(13)
 equ lfChar$ to CHAR(10)
+equ crlfString$ to "%%CRLF%%"
+equ crString$ to "%%CR%%"
+equ lfString$ to "%%LF%%"
+equ tabString to "%%TAB%%"
 *
 crt sentence()
 d3FileName = field(sentence(),' ',2)
@@ -21,12 +25,12 @@ if d3FileName ne "" then
    gosub ExportFile
 end else
    open "md" to mdFile else stop 201, "md"
-   read dataList from mdFile, "d3_file_list" else
-      crt "Unable to read the program list from md d3_file_list."
+   read d3FileList from mdFile, "d3FileList" else
+      crt "Unable to read the program list from md d3FileList."
       exit
    end
    loop
-      d3FileName = dataList<1>
+      d3FileName = d3FileList<1>
       if d3FileName = "" then exit
       d3FileList = delete(d3FileList,1,0,0)
       crt "filename: ":d3FileName
@@ -55,7 +59,7 @@ crt "windowsFileName: ":windowsFileName
    readnext id else exit
    read dataRec from dataFile, id then
     * Fix bad characters in data
-    dataRec = change(dataRec,tabChar$,nullChar$); * Remove tabs from the data
+    dataRec = change(dataRec,tabChar$,tabChar$); * Remove tabs from the data
     dataRec = change(dataRec,crChar$:lfChar$,crlfString$)
     dataRec = change(dataRec,crChar$,crString$)
     dataRec = change(dataRec,lfChar$,lfString$)
