@@ -1,19 +1,17 @@
-program export_from_d3.bas
+PROGRAM EXPORT_D3_TO_MVSHARP
 *
 * Program to export data for MVsharp bulk import
-* Must be flash compiled as in:
-* COMPILE {yourFileName} export_from_d3 (o
 *
 PROMPT ""
 *
-EQU dot$ TO "."
-EQU dash$ TO "-"
-EQU underscore$ TO "_"
-EQU asterisk$ TO "*"
+equ dot$ to "."
+equ dash$ to "-"
+equ underscore$ to "_"
+equ asterisk$ to "*"
 *
-EQU tabChar$ TO CHAR(9)
-EQU crChar$ TO CHAR(13)
-EQU lfChar$ TO CHAR(10)
+equ tabChar$ to CHAR(9)
+equ crChar$ to CHAR(13)
+equ lfChar$ to CHAR(10)
 *
 crt sentence()
 d3FileName = field(sentence(),' ',2)
@@ -22,9 +20,15 @@ if d3FileName ne "" then
    crt "filename: ":d3FileName
    gosub ExportFile
 end else
-   open "pointer-file" to pfFile else stop 201, "pointer-file"
+   open "md" to mdFile else stop 201, "md"
+   read dataList from mdFile, "d3_file_list" else
+      crt "Unable to read the program list from md d3_file_list."
+      exit
+   end
    loop
-      readnext d3FileName else exit
+      d3FileName = dataList<1>
+      if d3FileName = "" then exit
+      d3FileList = delete(d3FileList,1,0,0)
       crt "filename: ":d3FileName
       gosub ExportFile
    repeat
@@ -48,8 +52,7 @@ crt "windowsFileName: ":windowsFileName
   select dataFile
 *
   loop
-   readnext id else id = "\\eof"
-  until id = "\\eof" do
+   readnext id else exit
    read dataRec from dataFile, id then
     * Fix bad characters in data
     dataRec = change(dataRec,tabChar$,nullChar$); * Remove tabs from the data
